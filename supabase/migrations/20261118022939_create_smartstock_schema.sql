@@ -1,9 +1,3 @@
-CREATE TYPE public.app_role AS ENUM (
-    'owner',
-    'admin',
-    'cashier'
-);
-
 CREATE TYPE public.stock_movement_type AS ENUM (
     'opening_balance',
     'sale',
@@ -13,7 +7,6 @@ CREATE TYPE public.stock_movement_type AS ENUM (
 CREATE TABLE public.profiles (
     id uuid NOT NULL,
     display_name text NOT NULL,
-    role public.app_role NOT NULL DEFAULT 'cashier',
     is_active boolean NOT NULL DEFAULT true,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now(),
@@ -25,10 +18,6 @@ CREATE TABLE public.profiles (
     CONSTRAINT profiles_display_name_check
         CHECK (char_length(btrim(display_name)) BETWEEN 1 AND 255)
 );
-
-CREATE UNIQUE INDEX profiles_single_owner_uidx
-    ON public.profiles (role)
-    WHERE role = 'owner';
 
 CREATE TABLE public.categories (
     id uuid NOT NULL DEFAULT gen_random_uuid(),
