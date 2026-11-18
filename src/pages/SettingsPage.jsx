@@ -15,7 +15,7 @@ const resultMessages = {
   network: 'Tidak dapat menjangkau Supabase. Periksa jaringan dan URL proyek.',
   timeout: 'Pemeriksaan melewati batas waktu. Coba lagi sebentar lagi.',
   'not-configured':
-    'Isi VITE_SUPABASE_URL dan VITE_SUPABASE_PUBLISHABLE_KEY di .env.local, lalu mulai ulang Vite.',
+    'Isi VITE_SUPABASE_URL dan VITE_SUPABASE_ANON_KEY di .env.local, lalu mulai ulang Vite.',
 }
 
 export default function SettingsPage() {
@@ -26,19 +26,30 @@ export default function SettingsPage() {
     setChecking(true)
     setResult(null)
 
-    const check = await checkSupabaseConnection()
+    try {
+      const check = await checkSupabaseConnection()
 
-    setResult(
-      check.ok
-        ? { ok: true, message: 'Supabase Auth API merespons dengan sukses.' }
-        : {
-            ok: false,
-            message:
-              resultMessages[check.reason] ??
-              `Supabase merespons dengan HTTP ${check.status}. Periksa konfigurasi proyek dan publishable key.`,
-          },
-    )
-    setChecking(false)
+      setResult(
+        check.ok
+          ? { ok: true, message: 'Supabase Auth API merespons dengan sukses.' }
+          : {
+              ok: false,
+              message:
+                resultMessages[check.reason] ??
+                `Supabase merespons dengan HTTP ${check.status}. Periksa konfigurasi proyek dan anon key.`,
+            },
+      )
+    } catch (error) {
+      setResult({
+        ok: false,
+        message:
+          error instanceof Error
+            ? `Pemeriksaan koneksi gagal: ${error.message}`
+            : 'Pemeriksaan koneksi gagal karena kesalahan yang tidak diketahui.',
+      })
+    } finally {
+      setChecking(false)
+    }
   }
 
   return (
