@@ -3,7 +3,6 @@ import {
   AlertCircle,
   ChartNoAxesCombined,
   LoaderCircle,
-  Package,
   RefreshCw,
   Settings,
   ShoppingCart,
@@ -16,18 +15,12 @@ import CategoriesPage from './pages/CategoriesPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import PlaceholderPage from './pages/PlaceholderPage.jsx'
+import ProductsPage from './pages/ProductsPage.jsx'
 import SettingsPage from './pages/SettingsPage.jsx'
 
 const pages = {
   Dashboard: <DashboardPage />,
-  Produk: (
-    <PlaceholderPage
-      title="Produk"
-      description="Kelola katalog barang dan pantau informasi persediaan."
-      icon={Package}
-      emptyTitle="Kerangka halaman produk"
-    />
-  ),
+  Produk: <ProductsPage />,
   Kategori: <CategoriesPage />,
   Transaksi: (
     <PlaceholderPage
