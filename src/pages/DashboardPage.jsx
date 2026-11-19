@@ -195,15 +195,15 @@ function LoadingDashboard() {
         {overview.map(({ key, label }) => (
           <div
             key={key}
-            className="h-32 animate-pulse rounded-xl border border-neutral-200 bg-white p-5"
+            className="h-32 animate-pulse rounded-xl border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900"
           >
-            <p className="text-sm font-medium text-neutral-300">{label}</p>
-            <div className="mt-4 h-7 w-28 rounded bg-neutral-100" />
-            <div className="mt-3 h-3 w-36 rounded bg-neutral-100" />
+            <p className="text-sm font-medium text-neutral-300 dark:text-neutral-600">{label}</p>
+            <div className="mt-4 h-7 w-28 rounded bg-neutral-100 dark:bg-neutral-800" />
+            <div className="mt-3 h-3 w-36 rounded bg-neutral-100 dark:bg-neutral-800" />
           </div>
         ))}
       </section>
-      <div className="h-80 animate-pulse rounded-xl border border-neutral-200 bg-white" />
+      <div className="h-80 animate-pulse rounded-xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900" />
       <span className="sr-only">Memuat data dari Supabase...</span>
     </div>
   )
@@ -217,7 +217,7 @@ function RevenueChart({ days }) {
 
   return (
     <div
-      className="grid h-64 grid-cols-7 items-end gap-2 border-b border-neutral-200 px-1 pt-6 sm:gap-4 sm:px-3"
+      className="grid h-64 grid-cols-7 items-end gap-2 border-b border-neutral-200 px-1 pt-6 sm:gap-4 sm:px-3 dark:border-neutral-800"
       role="img"
       aria-label={`Pendapatan tujuh hari terakhir: ${days
         .map((day) => `${day.label} ${formatRupiah(day.revenueCents)}`)
@@ -244,7 +244,7 @@ function RevenueChart({ days }) {
                 title={`${day.label}: ${formatRupiah(day.revenueCents)}`}
               />
             </div>
-            <span className="mt-2 whitespace-nowrap text-[10px] text-neutral-500 sm:text-xs">
+            <span className="mt-2 whitespace-nowrap text-[10px] text-neutral-500 sm:text-xs dark:text-neutral-400">
               {day.label}
             </span>
           </div>
@@ -257,16 +257,16 @@ function RevenueChart({ days }) {
 function ErrorState({ error, onRetry }) {
   return (
     <section
-      className="rounded-xl border border-red-200 bg-white p-5 shadow-sm shadow-neutral-950/[0.02] sm:p-6"
+      className="rounded-xl border border-red-200 bg-white p-5 shadow-sm shadow-neutral-950/[0.02] sm:p-6 dark:border-red-900/50 dark:bg-neutral-900"
       role="alert"
     >
-      <span className="flex size-10 items-center justify-center rounded-lg bg-red-50 text-red-700">
+      <span className="flex size-10 items-center justify-center rounded-lg bg-red-50 text-red-700 dark:bg-red-950/60 dark:text-red-400">
         <AlertCircle size={20} />
       </span>
-      <h2 className="mt-4 text-sm font-semibold text-neutral-900">
+      <h2 className="mt-4 text-sm font-semibold text-neutral-900 dark:text-neutral-100">
         Data dashboard belum dapat dimuat
       </h2>
-      <p className="mt-1.5 text-sm leading-6 text-neutral-600">{error}</p>
+      <p className="mt-1.5 text-sm leading-6 text-neutral-600 dark:text-neutral-300">{error}</p>
       <button
         type="button"
         className="mt-4 inline-flex min-h-10 items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700"
@@ -352,12 +352,12 @@ export default function DashboardPage() {
           </section>
 
           <section className="mt-6 grid gap-5 xl:grid-cols-[minmax(0,1.55fr)_minmax(300px,0.9fr)]">
-            <div className="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm shadow-neutral-950/[0.02] sm:p-5">
+            <div className="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm shadow-neutral-950/[0.02] sm:p-5 dark:border-neutral-800 dark:bg-neutral-900">
               <div className="mb-5">
-                <h2 className="text-sm font-semibold text-neutral-900">
+                <h2 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                   Pendapatan 7 hari terakhir
                 </h2>
-                <p className="mt-1 text-xs text-neutral-500">
+                <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                   Berdasarkan tanggal transaksi di zona waktu Asia/Jakarta.
                 </p>
               </div>
@@ -372,7 +372,7 @@ export default function DashboardPage() {
                 <>
                   <RevenueChart days={state.data.chart} />
                   {state.data.recentTransactionCount === 0n && (
-                    <p className="mt-4 text-center text-xs text-neutral-500">
+                    <p className="mt-4 text-center text-xs text-neutral-500 dark:text-neutral-400">
                       Tidak ada transaksi dalam tujuh hari terakhir.
                     </p>
                   )}
@@ -380,29 +380,29 @@ export default function DashboardPage() {
               )}
             </div>
 
-            <div className="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm shadow-neutral-950/[0.02] sm:p-5">
+            <div className="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm shadow-neutral-950/[0.02] sm:p-5 dark:border-neutral-800 dark:bg-neutral-900">
               <div className="mb-5">
-                <h2 className="text-sm font-semibold text-neutral-900">
+                <h2 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                   Ringkasan 7 hari
                 </h2>
-                <p className="mt-1 text-xs text-neutral-500">
+                <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                   Periode kalender Asia/Jakarta, termasuk hari ini.
                 </p>
               </div>
               <dl className="space-y-4">
-                <div className="rounded-lg bg-neutral-50 p-4">
-                  <dt className="text-xs font-medium text-neutral-500">
+                <div className="rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800/60">
+                  <dt className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
                     Pendapatan
                   </dt>
-                  <dd className="mt-1 text-lg font-bold tracking-tight text-neutral-900">
+                  <dd className="mt-1 text-lg font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
                     {formatRupiah(state.data.recentRevenueCents)}
                   </dd>
                 </div>
-                <div className="rounded-lg bg-neutral-50 p-4">
-                  <dt className="text-xs font-medium text-neutral-500">
+                <div className="rounded-lg bg-neutral-50 p-4 dark:bg-neutral-800/60">
+                  <dt className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
                     Jumlah transaksi
                   </dt>
-                  <dd className="mt-1 text-lg font-bold tracking-tight text-neutral-900">
+                  <dd className="mt-1 text-lg font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
                     {countFormatter.format(state.data.recentTransactionCount)}
                   </dd>
                 </div>

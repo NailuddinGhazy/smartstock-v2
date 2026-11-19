@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
+
 @theme {
   --color-brand-50: #fef2f2;
   --color-brand-100: #fee2e2;
@@ -22,12 +24,40 @@
 
   html {
     min-width: 320px;
-    background: #fafafa;
+    background-color: #fafafa;
+    color: #171717;
     font-family: var(--font-sans);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color-scheme: light;
+  }
+
+  html.dark,
+  html[data-theme='dark'] {
+    background-color: #09090b !important;
+    color: #f4f4f5 !important;
+    color-scheme: dark;
+  }
+
+  /* Global dark mode adaptations for clean fallback */
+  .dark body {
+    background-color: #09090b;
+    color: #f4f4f5;
+  }
+
+  .dark input,
+  .dark select,
+  .dark textarea {
+    background-color: #18181b;
+    color: #f4f4f5;
+    border-color: #3f3f46;
+  }
+
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: #71717a;
   }
 
   body {
@@ -61,5 +91,14 @@
   .icon-button:hover {
     background: #f5f5f5;
     color: #171717;
+  }
+
+  .dark .icon-button {
+    color: #a1a1aa;
+  }
+
+  .dark .icon-button:hover {
+    background: #27272a;
+    color: #fafafa;
   }
 }

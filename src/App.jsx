@@ -17,11 +17,13 @@ import LoginPage from './pages/LoginPage.jsx'
 import PlaceholderPage from './pages/PlaceholderPage.jsx'
 import ProductsPage from './pages/ProductsPage.jsx'
 import SettingsPage from './pages/SettingsPage.jsx'
+import StockAdjustmentPage from './pages/StockAdjustmentPage.jsx'
 
 const pages = {
   Dashboard: <DashboardPage />,
   Produk: <ProductsPage />,
   Kategori: <CategoriesPage />,
+  'Penyesuaian Stok': <StockAdjustmentPage />,
   Transaksi: (
     <PlaceholderPage
       title="Transaksi"
@@ -183,7 +185,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900">
+    <div className="min-h-screen bg-neutral-50 text-neutral-900 transition-colors duration-200 dark:bg-neutral-950 dark:text-neutral-100">
       {mobileMenuOpen && (
         <button
           type="button"

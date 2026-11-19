@@ -1,4 +1,5 @@
 import {
+  ArrowDownUp,
   ChartNoAxesCombined,
   LayoutDashboard,
   Package,
@@ -12,6 +13,7 @@ const navigation = [
   { label: 'Dashboard', icon: LayoutDashboard },
   { label: 'Produk', icon: Package },
   { label: 'Kategori', icon: Tags },
+  { label: 'Penyesuaian Stok', icon: ArrowDownUp },
   { label: 'Transaksi', icon: ShoppingCart },
   { label: 'Laporan', icon: ChartNoAxesCombined },
 ]
@@ -24,12 +26,12 @@ export default function Sidebar({
 }) {
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-40 flex w-[272px] flex-col border-r border-neutral-200 bg-white transition-transform duration-200 lg:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 z-40 flex w-[272px] flex-col border-r border-neutral-200 bg-white transition-all duration-200 dark:border-neutral-800 dark:bg-neutral-900 lg:translate-x-0 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
       aria-label="Navigasi utama"
     >
-      <div className="flex h-[76px] items-center justify-between border-b border-neutral-100 px-6">
+      <div className="flex h-[76px] items-center justify-between border-b border-neutral-100 px-6 dark:border-neutral-800">
         <button
           type="button"
           className="flex items-center gap-3 text-left"
@@ -40,10 +42,10 @@ export default function Sidebar({
             SS
           </span>
           <span>
-            <span className="block text-[15px] font-bold tracking-tight text-neutral-950">
+            <span className="block text-[15px] font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
               SmartStock
             </span>
-            <span className="mt-0.5 block text-[11px] font-medium text-neutral-500">
+            <span className="mt-0.5 block text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
               INVENTORY WORKSPACE
             </span>
           </span>
@@ -59,7 +61,7 @@ export default function Sidebar({
       </div>
 
       <nav className="flex-1 space-y-1 px-3 py-6">
-        <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-neutral-400">
+        <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
           Menu utama
         </p>
         {navigation.map(({ label, icon: Icon }) => {
@@ -73,8 +75,8 @@ export default function Sidebar({
               aria-current={isActive ? 'page' : undefined}
               className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-brand-50 text-brand-700'
-                  : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-950'
+                  ? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300'
+                  : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100'
               }`}
             >
               <Icon
@@ -82,38 +84,38 @@ export default function Sidebar({
                 strokeWidth={isActive ? 2.2 : 1.8}
                 className={
                   isActive
-                    ? 'text-brand-600'
-                    : 'text-neutral-400 group-hover:text-neutral-700'
+                    ? 'text-brand-600 dark:text-brand-400'
+                    : 'text-neutral-400 group-hover:text-neutral-700 dark:text-neutral-500 dark:group-hover:text-neutral-300'
                 }
               />
               <span>{label}</span>
               {isActive && (
-                <span className="ml-auto h-5 w-0.5 rounded-full bg-brand-600" />
+                <span className="ml-auto h-5 w-0.5 rounded-full bg-brand-600 dark:bg-brand-500" />
               )}
             </button>
           )
         })}
       </nav>
 
-      <div className="border-t border-neutral-100 p-4">
+      <div className="border-t border-neutral-100 p-4 dark:border-neutral-800">
         <button
           type="button"
           onClick={() => onNavigate('Pengaturan')}
           aria-current={activePage === 'Pengaturan' ? 'page' : undefined}
           className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
             activePage === 'Pengaturan'
-              ? 'bg-brand-50 text-brand-700'
-              : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-950'
+              ? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300'
+              : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100'
           }`}
         >
           <Settings size={18} />
           <span>Pengaturan</span>
         </button>
-        <div className="mt-4 rounded-xl border border-neutral-200 bg-neutral-50 p-3.5">
-          <p className="text-xs font-semibold text-neutral-800">
+        <div className="mt-4 rounded-xl border border-neutral-200 bg-neutral-50 p-3.5 dark:border-neutral-800 dark:bg-neutral-800/60">
+          <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">
             SmartStock V2 · Tahap 1
           </p>
-          <p className="mt-1 text-xs leading-5 text-neutral-500">
+          <p className="mt-1 text-xs leading-5 text-neutral-500 dark:text-neutral-400">
             Kerangka aplikasi dan navigasi dasar.
           </p>
         </div>
