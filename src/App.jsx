@@ -15,7 +15,9 @@ import CategoriesPage from './pages/CategoriesPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import PlaceholderPage from './pages/PlaceholderPage.jsx'
+import PosTransactionPage from './pages/PosTransactionPage.jsx'
 import ProductsPage from './pages/ProductsPage.jsx'
+import ReportsPage from './pages/ReportsPage.jsx'
 import SettingsPage from './pages/SettingsPage.jsx'
 import StockAdjustmentPage from './pages/StockAdjustmentPage.jsx'
 
@@ -24,22 +26,8 @@ const pages = {
   Produk: <ProductsPage />,
   Kategori: <CategoriesPage />,
   'Penyesuaian Stok': <StockAdjustmentPage />,
-  Transaksi: (
-    <PlaceholderPage
-      title="Transaksi"
-      description="Lihat aktivitas penjualan dan detail transaksi."
-      icon={ShoppingCart}
-      emptyTitle="Kerangka halaman transaksi"
-    />
-  ),
-  Laporan: (
-    <PlaceholderPage
-      title="Laporan"
-      description="Tinjau ringkasan penjualan berdasarkan periode."
-      icon={ChartNoAxesCombined}
-      emptyTitle="Kerangka halaman laporan"
-    />
-  ),
+  Transaksi: <PosTransactionPage />,
+  Laporan: <ReportsPage />,
   Pengaturan: <SettingsPage />,
 }
 
