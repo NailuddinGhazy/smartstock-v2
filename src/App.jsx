@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   AlertCircle,
   ChartNoAxesCombined,
@@ -10,6 +10,7 @@ import {
 import EmptyState from './components/EmptyState.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import Topbar from './components/Topbar.jsx'
+import { APP_CONFIG } from './lib/appConfig.js'
 import { useAuth } from './lib/AuthContext.jsx'
 import CategoriesPage from './pages/CategoriesPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
@@ -102,6 +103,10 @@ export default function App() {
   const auth = useAuth()
   const [activePage, setActivePage] = useState('Dashboard')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  useEffect(() => {
+    document.title = APP_CONFIG.name
+  }, [])
 
   if (
     auth.status === 'loading' ||

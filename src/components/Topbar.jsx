@@ -1,4 +1,5 @@
 import { LogOut, Menu, Moon, Sun } from 'lucide-react'
+import { APP_CONFIG } from '../lib/appConfig.js'
 import { useTheme } from '../lib/ThemeContext.jsx'
 
 export default function Topbar({
@@ -63,7 +64,7 @@ export default function Topbar({
           type="button"
           className="inline-flex min-h-9 items-center justify-center gap-2 rounded-lg border border-neutral-200 bg-white px-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-60 sm:px-3 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
           onClick={onSignOut}
-          aria-label="Keluar dari SmartStock"
+          aria-label={`Keluar dari ${APP_CONFIG.name}`}
           title="Keluar"
         >
           <LogOut size={17} aria-hidden="true" />

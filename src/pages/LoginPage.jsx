@@ -7,6 +7,7 @@ import {
   LockKeyhole,
   Mail,
 } from 'lucide-react'
+import { APP_CONFIG } from '../lib/appConfig.js'
 import { useAuth } from '../lib/AuthContext.jsx'
 
 function getLoginErrorMessage(error) {
@@ -68,14 +69,14 @@ export default function LoginPage() {
       <section className="w-full max-w-[440px] rounded-2xl border border-neutral-200 bg-white p-6 shadow-xl shadow-neutral-950/[0.04] sm:p-9">
         <div className="mb-8 flex items-center gap-3">
           <span className="flex size-11 items-center justify-center rounded-xl bg-brand-600 text-sm font-bold tracking-tight text-white shadow-sm shadow-brand-600/20">
-            SS
+            {APP_CONFIG.shortName}
           </span>
           <div>
             <p className="text-[15px] font-bold tracking-tight text-neutral-950">
-              SmartStock
+              {APP_CONFIG.name}
             </p>
             <p className="mt-0.5 text-[11px] font-medium text-neutral-500">
-              INVENTORY WORKSPACE
+              {APP_CONFIG.tagline}
             </p>
           </div>
         </div>
@@ -85,7 +86,7 @@ export default function LoginPage() {
             Selamat datang
           </p>
           <h1 className="text-2xl font-bold tracking-tight text-neutral-950">
-            Masuk ke SmartStock
+            Masuk ke {APP_CONFIG.name}
           </h1>
           <p className="mt-2 text-sm leading-6 text-neutral-500">
             Gunakan akun yang telah dibuat oleh administrator.

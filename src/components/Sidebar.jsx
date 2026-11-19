@@ -8,6 +8,7 @@ import {
   Tags,
   X,
 } from 'lucide-react'
+import { APP_CONFIG } from '../lib/appConfig.js'
 
 const navigation = [
   { label: 'Dashboard', icon: LayoutDashboard },
@@ -36,17 +37,17 @@ export default function Sidebar({
           type="button"
           className="flex items-center gap-3 text-left"
           onClick={() => onNavigate('Dashboard')}
-          aria-label="SmartStock, buka dashboard"
+          aria-label={`${APP_CONFIG.name}, buka dashboard`}
         >
           <span className="flex size-10 items-center justify-center rounded-xl bg-brand-600 text-sm font-bold tracking-tight text-white shadow-sm shadow-brand-600/20">
-            SS
+            {APP_CONFIG.shortName}
           </span>
           <span>
             <span className="block text-[15px] font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
-              SmartStock
+              {APP_CONFIG.name}
             </span>
             <span className="mt-0.5 block text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
-              INVENTORY WORKSPACE
+              {APP_CONFIG.tagline}
             </span>
           </span>
         </button>
@@ -113,7 +114,7 @@ export default function Sidebar({
         </button>
         <div className="mt-4 rounded-xl border border-neutral-200 bg-neutral-50 p-3.5 dark:border-neutral-800 dark:bg-neutral-800/60">
           <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">
-            SmartStock V2 · Tahap 1
+            {APP_CONFIG.version}
           </p>
           <p className="mt-1 text-xs leading-5 text-neutral-500 dark:text-neutral-400">
             Kerangka aplikasi dan navigasi dasar.
