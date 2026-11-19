@@ -41,25 +41,6 @@
     color-scheme: dark;
   }
 
-  /* Global dark mode adaptations for clean fallback */
-  .dark body {
-    background-color: #09090b;
-    color: #f4f4f5;
-  }
-
-  .dark input,
-  .dark select,
-  .dark textarea {
-    background-color: #18181b;
-    color: #f4f4f5;
-    border-color: #3f3f46;
-  }
-
-  .dark input::placeholder,
-  .dark textarea::placeholder {
-    color: #71717a;
-  }
-
   body {
     min-width: 320px;
     min-height: 100vh;
@@ -74,6 +55,183 @@
     outline: 2px solid #dc2626;
     outline-offset: 2px;
   }
+}
+
+/* =========================================================
+   COMPREHENSIVE DARK MODE OVERRIDES
+   Otomatis mentransformasikan seluruh komponen, tabel, modal,
+   kartu, form, dan tombol yang masih memiliki kelas warna terang
+   menjadi dark theme elegan & nyaman dipandang (#09090b / #121215 / #18181b / #27272a).
+========================================================= */
+.dark body {
+  background-color: #09090b !important;
+  color: #f4f4f5 !important;
+}
+
+/* Kotak Kontainer, Card, Dialog, Modal, Sesi Box */
+.dark .bg-white {
+  background-color: #121215 !important;
+}
+
+.dark .bg-neutral-50 {
+  background-color: #18181b !important;
+}
+
+.dark .bg-neutral-100 {
+  background-color: #27272a !important;
+}
+
+/* Hover States */
+.dark .hover\:bg-neutral-50:hover,
+.dark .hover\:bg-neutral-50\/70:hover {
+  background-color: #1c1c21 !important;
+}
+
+.dark .hover\:bg-neutral-100:hover {
+  background-color: #27272a !important;
+}
+
+/* Garis Border & Divider */
+.dark .border-neutral-100,
+.dark .border-neutral-200,
+.dark .border-neutral-300 {
+  border-color: #27272a !important;
+}
+
+.dark .divide-neutral-100 > :not([hidden]) ~ :not([hidden]),
+.dark .divide-neutral-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #27272a !important;
+}
+
+/* Tipografi & Warna Teks */
+.dark .text-neutral-950,
+.dark .text-neutral-900,
+.dark .text-neutral-800 {
+  color: #f4f4f5 !important;
+}
+
+.dark .text-neutral-700,
+.dark .text-neutral-600 {
+  color: #d4d4d8 !important;
+}
+
+.dark .text-neutral-500 {
+  color: #a1a1aa !important;
+}
+
+.dark .text-neutral-400 {
+  color: #71717a !important;
+}
+
+/* Form Controls: Input, Select, Textarea */
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark select,
+.dark textarea {
+  background-color: #18181b !important;
+  color: #f4f4f5 !important;
+  border-color: #3f3f46 !important;
+}
+
+.dark input:not([type="checkbox"]):not([type="radio"]):focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #71717a !important;
+}
+
+.dark select option {
+  background-color: #18181b !important;
+  color: #f4f4f5 !important;
+}
+
+/* Table Headings & Elements */
+.dark thead tr {
+  background-color: #16161a !important;
+  border-color: #27272a !important;
+}
+
+.dark th {
+  color: #a1a1aa !important;
+}
+
+/* Badges Status & Pill */
+.dark .bg-emerald-50 {
+  background-color: rgba(6, 78, 59, 0.35) !important;
+}
+
+.dark .text-emerald-700,
+.dark .text-emerald-800 {
+  color: #6ee7b7 !important;
+}
+
+.dark .border-emerald-200 {
+  border-color: rgba(5, 150, 105, 0.3) !important;
+}
+
+/* Brand light backgrounds (e.g. icon container, active items) */
+.dark .bg-brand-50 {
+  background-color: rgba(127, 29, 29, 0.3) !important;
+}
+
+.dark .text-brand-600,
+.dark .text-brand-700 {
+  color: #f87171 !important;
+}
+
+/* Alert Error & Warning in Dark Mode */
+.dark .bg-red-50 {
+  background-color: rgba(127, 29, 29, 0.25) !important;
+}
+
+.dark .border-red-200 {
+  border-color: rgba(220, 38, 38, 0.35) !important;
+}
+
+.dark .text-red-700,
+.dark .text-red-800 {
+  color: #fca5a5 !important;
+}
+
+.dark .bg-amber-50 {
+  background-color: rgba(120, 53, 15, 0.25) !important;
+}
+
+.dark .border-amber-200 {
+  border-color: rgba(217, 119, 6, 0.35) !important;
+}
+
+.dark .text-amber-800,
+.dark .text-amber-900 {
+  color: #fcd34d !important;
+}
+
+/* Secondary Buttons & Outline Buttons */
+.dark button.border-neutral-200,
+.dark button.border-neutral-300 {
+  border-color: #3f3f46 !important;
+  background-color: #18181b !important;
+  color: #f4f4f5 !important;
+}
+
+.dark button.border-neutral-200:hover,
+.dark button.border-neutral-300:hover {
+  background-color: #27272a !important;
+}
+
+/* Pagination & Filter labels */
+.dark span.text-neutral-600,
+.dark label span.text-neutral-600 {
+  color: #d4d4d8 !important;
+}
+
+/* Modal Backdrop */
+.dark .bg-neutral-950\/40 {
+  background-color: rgba(0, 0, 0, 0.75) !important;
 }
 
 @layer components {
@@ -94,11 +252,11 @@
   }
 
   .dark .icon-button {
-    color: #a1a1aa;
+    color: #a1a1aa !important;
   }
 
   .dark .icon-button:hover {
-    background: #27272a;
-    color: #fafafa;
+    background: #27272a !important;
+    color: #fafafa !important;
   }
 }
