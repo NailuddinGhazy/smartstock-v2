@@ -7,12 +7,12 @@ import {
   RefreshCw,
   Settings,
   ShoppingCart,
-  Tags,
 } from 'lucide-react'
 import EmptyState from './components/EmptyState.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import Topbar from './components/Topbar.jsx'
 import { useAuth } from './lib/AuthContext.jsx'
+import CategoriesPage from './pages/CategoriesPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import PlaceholderPage from './pages/PlaceholderPage.jsx'
@@ -28,14 +28,7 @@ const pages = {
       emptyTitle="Kerangka halaman produk"
     />
   ),
-  Kategori: (
-    <PlaceholderPage
-      title="Kategori"
-      description="Atur pengelompokan produk agar katalog tetap tertata."
-      icon={Tags}
-      emptyTitle="Kerangka halaman kategori"
-    />
-  ),
+  Kategori: <CategoriesPage />,
   Transaksi: (
     <PlaceholderPage
       title="Transaksi"
