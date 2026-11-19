@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   AlertCircle,
   Check,
+  ChevronRight,
   CircleCheck,
   CreditCard,
   LoaderCircle,
@@ -121,6 +122,7 @@ export default function PosTransactionPage() {
   // Cart: Map of productId -> { product, quantity: bigint }
   const [cart, setCart] = useState([])
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+  const [isMobileCartOpen, setIsMobileCartOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [checkoutError, setCheckoutError] = useState('')
   const [feedback, setFeedback] = useState(null)
@@ -303,6 +305,7 @@ export default function PosTransactionPage() {
       setLastSuccessReceipt(receipt)
       setCart([])
       setIsCheckoutOpen(false)
+      setIsMobileCartOpen(false)
       setFeedback({
         type: 'success',
         message: `Transaksi berhasil disimpan (ID: ${transactionId.slice(0, 8)}...).`,
@@ -356,7 +359,7 @@ export default function PosTransactionPage() {
       {/* Main Grid: Products Catalog (Left) & Cart / POS Summary (Right) */}
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.7fr)_minmax(340px,1fr)]">
         {/* Left: Product Catalog */}
-        <div className="space-y-4">
+        <div className="space-y-4 pb-24 lg:pb-0">
           {/* Search & Category Filter */}
           <section
             aria-label="Pencarian katalog kasir"
@@ -499,8 +502,8 @@ export default function PosTransactionPage() {
           )}
         </div>
 
-        {/* Right: Cart & Checkout Summary */}
-        <div className="flex flex-col rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm shadow-neutral-950/[0.02] dark:border-neutral-800 dark:bg-neutral-900 sm:p-5">
+        {/* Right: Cart & Checkout Summary (Desktop Only) */}
+        <div className="hidden lg:flex flex-col rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm shadow-neutral-950/[0.02] dark:border-neutral-800 dark:bg-neutral-900 sm:p-5">
           <div className="flex items-center justify-between border-b border-neutral-100 pb-3 dark:border-neutral-800">
             <div className="flex items-center gap-2">
               <span className="flex size-8 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-950/60 dark:text-brand-400">
@@ -623,6 +626,213 @@ export default function PosTransactionPage() {
           </div>
         </div>
       </div>
+
+      {/* Mobile Floating Cart Trigger (Only visible on mobile when cart has items) */}
+      {cart.length > 0 && (
+        <aside
+          aria-label="Keranjang transaksi kasir mengambang"
+          className="fixed bottom-5 inset-x-4 z-40 mx-auto max-w-lg lg:hidden"
+        >
+          <button
+            className="group flex w-full items-center justify-between gap-3 rounded-2xl bg-brand-600 px-4 py-3.5 text-white shadow-xl shadow-brand-950/20 transition-all hover:bg-brand-700 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900"
+            onClick={() => setIsMobileCartOpen(true)}
+            type="button"
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white">
+                <ShoppingCart size={20} />
+                <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[11px] font-bold text-white shadow ring-2 ring-brand-600">
+                  {cartSummary.totalItems > 99n
+                    ? '99+'
+                    : cartSummary.totalItems.toString()}
+                </span>
+              </div>
+              <div className="min-w-0 text-left">
+                <p className="truncate text-xs font-medium text-brand-100">
+                  {cart.length} produk ({cartSummary.totalItems.toString()} pcs)
+                </p>
+                <p className="truncate text-sm font-bold text-white">
+                  {cartSummary.formattedTotal}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-1 rounded-xl bg-white/15 px-3 py-1.5 text-xs font-semibold text-white transition group-hover:bg-white/20">
+              <span>Buka Keranjang</span>
+              <ChevronRight size={15} />
+            </div>
+          </button>
+        </aside>
+      )}
+
+      {/* Mobile Centered Floating Cart Pop-up Modal */}
+      {isMobileCartOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/60 p-4 backdrop-blur-xs lg:hidden"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsMobileCartOpen(false)
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setIsMobileCartOpen(false)
+            }
+          }}
+        >
+          <section
+            aria-labelledby="mobile-cart-title"
+            aria-modal="true"
+            className="flex max-h-[85vh] w-full max-w-lg flex-col rounded-2xl border border-neutral-200 bg-white p-4 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900 sm:p-5"
+            role="dialog"
+          >
+            <div className="flex items-center justify-between border-b border-neutral-100 pb-3 dark:border-neutral-800">
+              <div className="flex items-center gap-2">
+                <span className="flex size-8 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-950/60 dark:text-brand-400">
+                  <ShoppingCart size={17} />
+                </span>
+                <h2
+                  className="text-base font-bold text-neutral-900 dark:text-neutral-100"
+                  id="mobile-cart-title"
+                >
+                  Keranjang Kasir
+                </h2>
+              </div>
+              <div className="flex items-center gap-2">
+                {cart.length > 0 && (
+                  <button
+                    className="text-xs font-medium text-neutral-400 hover:text-red-600 dark:hover:text-red-400"
+                    onClick={clearCart}
+                    type="button"
+                  >
+                    Kosongkan
+                  </button>
+                )}
+                <button
+                  aria-label="Tutup keranjang"
+                  className="icon-button -mr-1 size-8"
+                  onClick={() => setIsMobileCartOpen(false)}
+                  type="button"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            </div>
+
+            {/* Cart Item List */}
+            <div className="my-3 max-h-[46vh] flex-1 space-y-3 overflow-y-auto pr-1">
+              {cart.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-10 text-center text-neutral-400 dark:text-neutral-500">
+                  <ShoppingCart className="mb-2 opacity-40" size={36} />
+                  <p className="text-sm font-medium">Keranjang masih kosong</p>
+                  <p className="mt-1 text-xs">
+                    Pilih produk dari katalog untuk memulai transaksi penjualan.
+                  </p>
+                </div>
+              ) : (
+                cart.map((item) => {
+                  const priceCents = parseAmountToCents(item.product.price)
+                  const subtotalCents = priceCents * item.quantity
+                  const stockInt = BigInt(item.product.stock)
+
+                  return (
+                    <div
+                      key={item.product.id}
+                      className="flex items-center justify-between gap-3 rounded-lg border border-neutral-100 bg-neutral-50/60 p-3 dark:border-neutral-800 dark:bg-neutral-800/40"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-xs font-semibold text-neutral-900 dark:text-neutral-100">
+                          {item.product.name}
+                        </p>
+                        <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
+                          @ {currencyFormatter.format(Number(item.product.price))}
+                        </p>
+                        <p className="mt-1 text-xs font-bold text-brand-600 dark:text-brand-400">
+                          {formatCentsToCurrency(subtotalCents)}
+                        </p>
+                      </div>
+
+                      {/* Quantity controls */}
+                      <div className="flex shrink-0 items-center gap-1.5">
+                        <button
+                          className="flex size-7 items-center justify-center rounded border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
+                          onClick={() =>
+                            updateQuantity(item.product.id, item.quantity - 1n)
+                          }
+                          type="button"
+                        >
+                          <Minus size={13} />
+                        </button>
+                        <span className="w-7 text-center text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                          {item.quantity.toString()}
+                        </span>
+                        <button
+                          className="flex size-7 items-center justify-center rounded border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
+                          disabled={item.quantity >= stockInt}
+                          onClick={() =>
+                            updateQuantity(item.product.id, item.quantity + 1n)
+                          }
+                          type="button"
+                        >
+                          <Plus size={13} />
+                        </button>
+                        <button
+                          aria-label="Hapus item"
+                          className="ml-1 flex size-7 items-center justify-center rounded text-neutral-400 hover:text-red-600 dark:hover:text-red-400"
+                          onClick={() => removeFromCart(item.product.id)}
+                          type="button"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+
+            {/* Checkout Footer */}
+            <div className="border-t border-neutral-100 pt-3 dark:border-neutral-800">
+              <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
+                <span>Total Item</span>
+                <span className="font-semibold text-neutral-800 dark:text-neutral-200">
+                  {cartSummary.totalItems.toString()} pcs
+                </span>
+              </div>
+              <div className="mt-1.5 flex items-center justify-between">
+                <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                  Total Tagihan
+                </span>
+                <span className="text-lg font-bold text-neutral-950 dark:text-neutral-50">
+                  {cartSummary.formattedTotal}
+                </span>
+              </div>
+
+              <div className="mt-3 flex items-center gap-2">
+                <button
+                  className="min-h-11 flex-1 rounded-xl border border-neutral-300 px-3 py-2 text-xs font-semibold text-neutral-700 transition hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                  onClick={() => setIsMobileCartOpen(false)}
+                  type="button"
+                >
+                  Tambah Produk
+                </button>
+                <button
+                  className="flex min-h-11 flex-[2] items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-brand-600/20 transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
+                  disabled={cart.length === 0}
+                  onClick={() => {
+                    setIsMobileCartOpen(false)
+                    setIsCheckoutOpen(true)
+                  }}
+                  type="button"
+                >
+                  <CreditCard size={17} />
+                  Proses Transaksi
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
 
       {/* Confirmation & Payment Modal Dialog */}
       {isCheckoutOpen && (
